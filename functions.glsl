@@ -20,9 +20,17 @@ float rectangle(in vec2 st, in vec2 origin, in vec2 dimensions) {
     return pct;
 }
 
+// Draws a hollow rectangle with the given borderWidth
+float rectangleOutline(in vec2 st, in vec2 origin, in vec2 dimensions, in float borderWidth) {
+    float pct = rectangle(st, origin, dimensions);
+    float inverse = 1.0 - rectangle(st, origin + borderWidth, dimensions - borderWidth * 2.0);
+
+    return pct * inverse;
+}
+
 void main(){
     vec2 st = gl_FragCoord.xy/iResolution.xy;
-    float color = rectangle(st, vec2(0.1, 0.1), vec2(0.5, 0.8));
+    float color = rectangleOutline(st, vec2(0.1, 0.1), vec2(0.8, 0.8), 0.01);
 
     gl_FragColor = vec4(vec3(color),1.0);
 }
