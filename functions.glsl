@@ -28,9 +28,15 @@ float rectangleOutline(in vec2 st, in vec2 origin, in vec2 dimensions, in float 
     return pct * inverse;
 }
 
+// Draws a circle with a feathered edge
+float circle(in vec2 st, in vec2 center, in float radius, in float feather) {
+    float pct = smoothstep(radius, radius - feather, distance(st, center));
+    return pct;
+}
+
 void main(){
     vec2 st = gl_FragCoord.xy/iResolution.xy;
-    float color = rectangleOutline(st, vec2(0.1, 0.1), vec2(0.8, 0.8), 0.01);
+    float color = circle(st, vec2(0.5), 0.4, 0.1);
 
     gl_FragColor = vec4(vec3(color),1.0);
 }
