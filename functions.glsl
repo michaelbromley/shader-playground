@@ -34,6 +34,16 @@ float circle(in vec2 st, in vec2 center, in float radius, in float feather) {
     return pct;
 }
 
+// Draws an n-sided polygon
+float polygon(vec2 st, int vertices) {
+  // Angle and radius from the current pixel
+  float a = atan(st.x,st.y)+PI;
+  float r = TWO_PI/float(vertices);
+  
+  // Shaping function that modulate the distance
+  return cos(floor(.5+a/r)*r-a)*length(st);
+}
+
 void main(){
     vec2 st = gl_FragCoord.xy/iResolution.xy;
     float color = circle(st, vec2(0.5), 0.4, 0.1);
