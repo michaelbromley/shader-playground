@@ -1,4 +1,6 @@
-// Author @patriciogv ( patriciogonzalezvivo.com ) - 2015
+/**
+ * Experimenting with matrix transformations
+ */
 
 #ifdef GL_ES
 precision mediump float;
