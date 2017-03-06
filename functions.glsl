@@ -7,6 +7,9 @@
 precision mediump float;
 #endif
 
+#define PI 3.14159265359
+#define TWO_PI 6.28318530718
+
 // Function for drawing a rectangle
 float rectangle(in vec2 st, in vec2 origin, in vec2 dimensions) {
     // bottom-left
@@ -44,9 +47,19 @@ float polygon(vec2 st, int vertices) {
   return cos(floor(.5+a/r)*r-a)*length(st);
 }
 
+// Create a repeating pattern
+vec2 tile(vec2 st, int cols, int rows) {
+    return fract(st * vec2(float(cols), float(rows)));
+}
+
 void main(){
     vec2 st = gl_FragCoord.xy/iResolution.xy;
-    float color = circle(st, vec2(0.5), 0.4, 0.1);
+    st -= 0.5;
+    st *= 2.0;
+    st = tile(st, 2, 2);
+    st -= 0.5;
+    st *= mat2(1.5, 0.0, 0.0, 1.5);
+    float color = step(0.5, polygon(st, 5));
 
     gl_FragColor = vec4(vec3(color),1.0);
 }
