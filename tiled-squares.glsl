@@ -30,33 +30,34 @@ float box(vec2 _st, vec2 _size, float _smoothEdges){
 }
 
 void main(void){
+    float time = iGlobalTime * 2.;
     vec2 st = gl_FragCoord.xy/iResolution.xy;
     vec3 color = vec3(0.0);
     const float zoom = 8.0;
-    float col = floor(st.x * zoom);
-    float row = floor(st.y * zoom);
+    float col = (st.x * zoom);
+    float row = (st.y * zoom);
 
     st = tile(st, zoom);
-    st = rotate2D(st, (iGlobalTime) + (row + sin(iGlobalTime / 3.1) * col + cos(iGlobalTime / 1.7)));
+    st = rotate2D(st, (time) + (row + sin(time / 3.1) * col + cos(time / 1.7)));
     
     st = vec3(vec3(st, 1.0) * mat3(
-        1.0 + (sin(iGlobalTime) + 1.0) / 2.0, 
+        1.0 + (sin(time) + 1.0) / 2.0, 
+        0.3, 
         0.0, 
-        0.0, 
         0.0,
-        1.0 + (sin(iGlobalTime * 0.87) + 1.0) / 2.0,
+        1.0 + (sin(time * 0.87) + 1.0) / 2.0,
+        0.1,
         0.0,
-        0.0,
-        0.0,
-        1.0 + (sin(iGlobalTime * 0.7) + 1.0) / 2.0
+        -0.2,
+        1.0 + (sin(time * 0.7) + 1.0) / 2.0
     )).xy;
 
-    st = rotate2D(st, -iGlobalTime * 1.345);
+    st = rotate2D(st, -time * 1.345);
 
     // Draw a square
-    color.b = box(st,vec2(0.5),0.02) / (col + 1.0 / zoom);
+    color.b = box(st,vec2(0.5),0.2) / (col + 1.0 / zoom);
     color.r = box(st,vec2(0.5),0.02) / (sin(row / 1.3) + 1.0);
-    color.g = box(st,vec2(0.5),0.01) / (sin(col / 1.3) + 1.0) / 6.0;
+    color.g = box(st,vec2(0.5),0.01) / (sin(col / 1.3) + 1.0) / 4.0;
 
     gl_FragColor = vec4(color,1.0);
 }
