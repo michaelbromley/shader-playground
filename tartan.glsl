@@ -28,7 +28,7 @@ mat2 rotate2d(float _angle){
 
 void main(void){
     float time = iGlobalTime * .5;
-     float osc1 = smoothstep(0.3, 0.7, (sin(time) + 1.0) / 2.0);
+    float osc1 = smoothstep(0.3, 0.7, (sin(time) + 1.0) / 2.0);
     float osc2 = smoothstep(0.5, 0.6, (sin(time * 2.) + 1.0) / 2.0);
     
     vec2 st = gl_FragCoord.xy/iResolution.xy;
